@@ -23,6 +23,6 @@ filterFile = "filter.rgf"
 ignoreNewlinesInTextObjects = "off"
 
 [environments.target1]
-url = "jdbc:postgresql://localhost:5432/postgres"
+url = "jdbc:postgresql://localhost:5432/flyway"
 schemas = [ "public" ]
-displayName = "local_postgres"
+displayName = "local_flyway"
