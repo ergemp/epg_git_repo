@@ -1,0 +1,50 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+  push:
+    branches:
+      - dev
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: install postgresql client
+        run: | 
+          sudo apt-get install -y postgresql-client
+          psql --version  
+      - name: connect to env
+        env:
+          PGPASSWORD: ${{ secrets.POSTGRES_ADMIN }}   
+          PGHOST: ${{ secrets.POSTGRES_HOST }}  
+        run: | 
+          echo connecting to $PGHOST
+          psql -p 5432 -d dev -U postgres -c 'select version();'
+      
+      #- name: Get All Changed Files
+      #  uses: jitterbit/get-changed-files@v1
+      #  with:
+      #    format: 'csv'
+      #- run: |
+      #    mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
+      #    for added_modified_file in "${added_modified_files[@]}"; do
+      #      echo "Do something with this ${added_modified_file}."
+      #    done
+                 
+      - name: Get All Changed Files2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+      # NOTE: `since_last_remote_commit: true` is implied by default and falls back to the previous local commit.
+
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+            cat $file
+          done
