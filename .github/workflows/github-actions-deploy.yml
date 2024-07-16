@@ -13,4 +13,6 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.POSTGRES_USER }}   
           PGHOST: ${{ secrets.POSTGRES_HOST }}  
-        run: psql -h $PGHOST -p 5432 -d dev -U postgres -c 'select version();'
+        run: | 
+          echo connecting to $PGHOST
+          psql -p 5432 -d dev -U postgres -c 'select version();'
