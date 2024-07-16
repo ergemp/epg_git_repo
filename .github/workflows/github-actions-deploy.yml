@@ -28,7 +28,7 @@ jobs:
       #    done
                  
       - name: Get All Changed Files2
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
