@@ -10,4 +10,7 @@ jobs:
           sudo apt-get install -y postgresql-client
           psql --version  
       - name: connect to env
-        run: export PGPASSWORD='${{secrets.POSTGRES_USER}}'; psql -h ${{secrets.POSTGRES_HOST}} -p 5432 -d dev -U postgres -c 'select version();'
+        env:
+          PGPASSWORD: ${{ secrets.POSTGRES_USER }}   
+          PGHOST: ${{ secrets.POSTGRES_HOST }}  
+        run: psql -h $PGHOST -p 5432 -d dev -U postgres -c 'select version();'
