@@ -48,7 +48,7 @@ jobs:
         run: |
           for file in ${ALL_CHANGED_FILES}; do
             echo "$file was changed"            
-            if [[ "$file" == "*.sql" ]]; then
+            if [[ $file == *.sql ]]; then
               psql -p 5432 -d dev -U postgres -a -f  $file
             fi
           done
