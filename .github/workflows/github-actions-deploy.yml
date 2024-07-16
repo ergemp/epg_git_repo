@@ -16,3 +16,11 @@ jobs:
         run: | 
           echo connecting to $PGHOST
           psql -p 5432 -d dev -U postgres -c 'select version();'
+      - name: Modified files on main branch
+        run: |
+          git fetch origin main:main
+          git diff --name-only --diff-filter=d main~ main
+      - name: Modified files on dev branch
+        run: |
+          git fetch origin dev:dev
+          git diff --name-only --diff-filter=d dev~ dev          
